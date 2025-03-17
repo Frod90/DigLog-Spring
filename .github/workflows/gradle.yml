@@ -42,12 +42,13 @@ jobs:
         echo "::add-mask::${{ secrets.APPLICATION_SECRET_YML }}" > ./src/main/resources/application.yml
         echo "::add-mask::${{ secrets.APPLICATION_PROD_SECRET_YML }}" > ./src/main/resources/application-prod.yml
         echo "::add-mask::${{ secrets.APPLICATION_TEST_SECRET_YML }}" > ./src/main/resources/application-test.yml
+        cat ./src/main/resources/application-test.yml
 
     - name: Build with Gradle Wrapper
       run: ./gradlew build -x test
 
     - name: Run Tests
-      run: SPRING_PROFILES_ACTIVE=test SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KAKAO_REDIRECT_URI=http://test-host/api/login/oauth2/code/kakao CLIENT_URLS=http://test-host ./gradlew test --info
+      run: SPRING_PROFILES_ACTIVE=test ./gradlew test
     
     - name: Clean up secrets file
       if: always()
