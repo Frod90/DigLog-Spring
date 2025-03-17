@@ -36,11 +36,13 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
 
-    - name: Build with Gradle Wrapper
+    - name: Write Application.yml
       run: |
-        mkdir -p ./src/main/resources
-        echo "$::add-mask::{{secrets.APPLICATION_SECRET_YML}}" | base64 --decode > ./src/main/resources/application.yml
-        ./gradlew build
+        touch ./src/main/resources/application.yml
+        echo "::add-mask::${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml
+
+    - name: Build with Gradle Wrapper
+      run: ./gradlew build
     
     - name: Clean up secrets file
       if: always()
