@@ -44,7 +44,10 @@ jobs:
         echo "::add-mask::${{ secrets.APPLICATION_TEST_SECRET_YML }}" > ./src/main/resources/application-test.yml
 
     - name: Build with Gradle Wrapper
-      run: ./gradlew build
+      run: ./gradlew build -x test
+
+    - name: Run Tests
+      run: SPRING_PROFILES_ACTIVE=test ./gradlew test --info
     
     - name: Clean up secrets file
       if: always()
