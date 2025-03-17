@@ -47,7 +47,7 @@ jobs:
       run: ./gradlew build -x test
 
     - name: Run Tests
-      run: SPRING_PROFILES_ACTIVE=test ./gradlew test --info
+      run: SPRING_PROFILES_ACTIVE=test SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KAKAO_REDIRECT_URI=http://test-host/api/login/oauth2/code/kakao CLIENT_URLS=http://test-host ./gradlew test --info
     
     - name: Clean up secrets file
       if: always()
