@@ -38,7 +38,7 @@ jobs:
 
     - name: Write Application.yml
       run: |
-        touch ./src/main/resources/application.yml
+        mkdir -p ./src/main/resources
         echo "::add-mask::${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml
 
     - name: Build with Gradle Wrapper
