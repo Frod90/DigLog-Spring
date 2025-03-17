@@ -38,8 +38,13 @@ jobs:
 
     - name: Build with Gradle Wrapper
       run: |
-        echo ${{secrets.APPLICATION_SECRET_YML}} | base64 --decode > ./src/main/resources/application-secret.yml
+        mkdir -p ./src/main/resources
+        echo $::add-mask::{{secrets.APPLICATION_SECRET_YML}} | base64 --decode > ./src/main/resources/application.yml
         ./gradlew build
+    
+    - name: Clean up secrets file
+      if: always()  # 성공, 실패와 관계없이 실행
+      run: rm -f ./src/main/resources/application-secret.yml
 
 
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
