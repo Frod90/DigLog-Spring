@@ -39,14 +39,19 @@ jobs:
     - name: Write Application.yml
       run: |
         mkdir -p ./src/main/resources
-        echo "::add-mask::${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml
+        echo "::add-mask::${{ secrets.APPLICATION_SECRET_YML }}" > ./src/main/resources/application.yml
+        echo "::add-mask::${{ secrets.APPLICATION_PROD_SECRET_YML }}" > ./src/main/resources/application-prod.yml
+        echo "::add-mask::${{ secrets.APPLICATION_TEST_SECRET_YML }}" > ./src/main/resources/application-test.yml
 
     - name: Build with Gradle Wrapper
       run: ./gradlew build
     
     - name: Clean up secrets file
       if: always()
-      run: rm -f ./src/main/resources/application-secret.yml
+      run: |
+        rm -f ./src/main/resources/application.yml
+        rm -f ./src/main/resources/application-prod.yml
+        rm -f ./src/main/resources/application-test.yml
 
 
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
