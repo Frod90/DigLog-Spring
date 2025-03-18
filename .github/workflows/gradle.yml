@@ -30,7 +30,6 @@ jobs:
         echo "${{ secrets.APPLICATION_SECRET_YML }}" > ./src/main/resources/application.yml
         echo "${{ secrets.APPLICATION_PROD_SECRET_YML }}" > ./src/main/resources/application-prod.yml
         echo "${{ secrets.APPLICATION_TEST_SECRET_YML }}" > ./src/main/resources/application-test.yml
-        cat ./src/main/resources/application-test.yml
 
     - name: Build jar
       run: ./gradlew bootJar -x test
