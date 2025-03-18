@@ -24,12 +24,18 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Write Application.yml
+    - name: Mask Secrets
       run: |
-        mkdir -p ./src/main/resources
         echo "::add-mask::${{ secrets.APPLICATION_SECRET_YML }}"
         echo "::add-mask::${{ secrets.APPLICATION_PROD_SECRET_YML }}"
         echo "::add-mask::${{ secrets.APPLICATION_TEST_SECRET_YML }}"
+
+    - name: Write Application.yml
+      run: |
+        mkdir -p ./src/main/resources
+        echo "${{ secrets.APPLICATION_SECRET_YML }}" > ./src/main/resources/application.yml
+        echo "${{ secrets.APPLICATION_PROD_SECRET_YML }}" > ./src/main/resources/application-prod.yml
+        echo "${{ secrets.APPLICATION_TEST_SECRET_YML }}" > ./src/main/resources/application-test.yml
 
     - name: Build jar
       run: ./gradlew bootJar -x test
