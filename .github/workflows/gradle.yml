@@ -45,10 +45,10 @@ jobs:
         password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
     - name: Build Docker Image
-      run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/diglog-doker-repo:latest .
+      run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/diglog-docker-repo:latest .
 
     - name: Push Docker Image to DockerHub
-      run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/diglog-doker-repo:latest
+      run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/diglog-docker-repo:latest
 
     - name: Clean up secrets file
       if: always()
