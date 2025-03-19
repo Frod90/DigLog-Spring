@@ -68,4 +68,8 @@ jobs:
     needs: build-and-push
     steps:
       - name: Run deploy script
+        env:
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
         run: sh /home/ubuntu/deploy.sh
+
