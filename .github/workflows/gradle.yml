@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-push:
 
     runs-on: ubuntu-latest
     permissions:
@@ -61,3 +61,11 @@ jobs:
         rm -f ./src/main/resources/application.yml
         rm -f ./src/main/resources/application-prod.yml
         rm -f ./src/main/resources/application-test.yml
+
+
+  deploy:
+    runs-on: [self-hosted, diglog-spring, dev]
+    needs: build-and-push
+    steps:
+      - name: Run deploy script
+        run: sh /home/ubuntu/deploy.sh
