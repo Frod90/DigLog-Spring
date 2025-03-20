@@ -62,7 +62,6 @@ jobs:
         rm -f ./src/main/resources/application-prod.yml
         rm -f ./src/main/resources/application-test.yml
 
-
   deploy:
     runs-on: [self-hosted, diglog-spring]
     needs: build-and-push
